@@ -6,9 +6,9 @@ subroutine fhb11(z13,z35,z13obs,&
      pia13srt,imembC)
   use cldclass
   use nbinMod
-  use geophysEns
+  !use geophysEns
   use ran_mod
-  use gEnv  !! get the reliabFlag from here
+  use gEnv  !! get the realiabFlag from here
   implicit none
   integer :: isurf
   integer :: ngates,node(5),imu(ngates), npart, nmfreqm
@@ -65,10 +65,12 @@ subroutine fhb11(z13,z35,z13obs,&
 !  print*, node
 !  write(*,*) z13obs(node(1):node(5))
 !  stop
-  call interpolPC(imembC+1, rhPCij, cldwPCij, cldw, rh)
+!  call interpolPC(imembC+1, rhPCij, cldwPCij, cldw, rh)
   iEx=0
 
   do i=1,nlayer
+     rh(i)=80.
+     cldw(i)=0.0
      j=rh(i)/2.
      if(j<=0) j=1
      if(j>50) j=1

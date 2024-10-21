@@ -62,11 +62,14 @@ if [ $recompile -eq 1 ]; then
     $FC -c -fPIC src_f90_lite/latlon.f90
     $FC -c -fPIC src_f90_lite/interpol.f90
     $FC -c -fPIC src_f90_lite/setOpt.f90
+    $FC -c -fPIC src_f90_lite/local_rad_module.f90
+    $FC -c -fPIC src_f90_lite/cloud.f90
+    $FC -c -fPIC src_f90_lite/allocateMem.f90
+    g++-14 -c -fPIC -DGFOR -I src_c_lite/ src_c_lite/ensFilter.cc
 fi
-$FC -c -fPIC src_f90_lite/local_rad_module.f90
-$FC -c -fPIC src_f90_lite/cloud.f90
-$FC -c -fPIC src_f90_lite/allocateMem.f90
-g++-14 -c -fPIC -DGFOR -I src_c_lite/ src_c_lite/ensFilter.cc
-#$FC -c -fPIC src_f90_lite/radarRet_P2_py.f90
 
-f2py -c -m cAlg src_f90_lite/mainf_lite.f90 src_f90_lite/test_string.f90 src_f90_lite/radarRet_P2_py.f90 set_and_get_fields.f90 globModule.o f90DataTypes.o random.o writegif.o weightModule.o nbin.o missing_flags.o cloud.o allocateMem.o readTables_nonsph.o absorb.o bisection.o gcloud.o geomask.o read_melt_percentages.o ensFilter.o fModelFortran.NUBF.o  gEnv.o fhb1_noNaN.o geophysEns.o radtran_tau_dble.o rterain.o band_dble.o GMIRetTypes.o GMIRet.o gmi_ocean_ret_raob.o emissModule.o lut_routines_sjm.o atm_routines.o calcPIA.o dboux.o rosen.o fmodel.o check_nan.o ezlhconv.o gmi_land_ret.o readNh.o retTablesInt.half.o oe_routines.o algebra.o normal.o multiscatter-1.2.10/lib/libmultiscatter.a beamConvSet.o beamConvP.o sst.rend.o screenocean.o outputminmax.o asciiCon.o clearsc.o convAllFreq.o convPix2.py.o radarRet.o resampGMI.o latlon.o interpol.o setOpt.o local_rad_module.o -lblas -llapack -lstdc++
+#$FC -c -fPIC src_f90_lite/radarRet_P2_py.f90
+#g++-14 -c -fPIC -DGFOR -I src_c_lite/ src_c_lite/fModelFortran_py.cc
+$FC -c -fPIC src_f90_lite/fhb1_noNaN.f90
+
+f2py -c -m cAlg src_f90_lite/mainf_lite.f90 src_f90_lite/test_string.f90 src_f90_lite/radarRet_P2_py.f90 src_f90_lite/radar_f2py.f90 set_and_get_fields.f90 globModule.o f90DataTypes.o random.o writegif.o weightModule.o nbin.o missing_flags.o cloud.o allocateMem.o readTables_nonsph.o absorb.o bisection.o gcloud.o geomask.o read_melt_percentages.o ensFilter.o fModelFortran.NUBF.o  gEnv.o fhb1_noNaN.o geophysEns.o radtran_tau_dble.o rterain.o band_dble.o GMIRetTypes.o GMIRet.o gmi_ocean_ret_raob.o emissModule.o lut_routines_sjm.o atm_routines.o calcPIA.o dboux.o rosen.o fmodel.o check_nan.o ezlhconv.o gmi_land_ret.o readNh.o retTablesInt.half.o oe_routines.o algebra.o normal.o multiscatter-1.2.10/lib/libmultiscatter.a beamConvSet.o beamConvP.o sst.rend.o screenocean.o outputminmax.o asciiCon.o clearsc.o convAllFreq.o convPix2.py.o radarRet.o resampGMI.o latlon.o interpol.o setOpt.o local_rad_module.o fModelFortran_py.o -lblas -llapack -lstdc++

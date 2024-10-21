@@ -24,7 +24,6 @@ extern "C" float ran_mod_mp_normal2_(float *nm, float *nstd);
 
 extern "C" void f_model_fortran_(float *z13obs, float *z35obs, 
 		   int nodes[5], int *isurf, int *imu,
-		   float *log10dNP, int *nodeP, int nNodes, 
 		   float *pia35M, float *pia13M,
 		   float *z35mod, float *pwc, float *dr, int *ic, int *jc, 
 		   float *hh,
@@ -32,13 +31,13 @@ extern "C" void f_model_fortran_(float *z13obs, float *z35obs,
 		   float *salb, float *kext,float *asym, int *itype,
 		   int *ngates,float *rrate,float *d0,float *log10dN,
 		   float *z13, float *z35,
-		   int *imuv, float *hfreez,float *dz, 
-		   float *pia13srt, float *relPia13srt,
-		   float *pia35srt, float *relPia35srt,
+		   int *imuv, float *hfreez,
+		   float *pia13srt,
+		   float *pia35srt, 
 //  SFM  begin  06/22/2014; for M.Grecu  (unknown justification)
 //  SFM  begin  07/01/2014; for M.Grecu  random sequences
-		   int *imemb,float *localZAngle, float *wfractPix, 
-		   float *xs, long *ichunk, float *nstdA)
+		   int *imemb,
+		   float *xs,  float *nstdA)
 //  SFM  end    07/01/2014
 //  SFM  end    06/22/2014
 /**********************************************************************************************
@@ -142,7 +141,7 @@ float *log10dN   : vector, returns retrieved log10(N0/N0ref)
   //  exit(0);
   for(i=0;i<*ngates;i++)
     {
-      log10dN[i]=-99.9;
+      //log10dN[i]=-99.9;
       d0[i]=0;
       rrate[i]=0;
       z13obsP[i]=-99;
@@ -160,30 +159,6 @@ float *log10dN   : vector, returns retrieved log10(N0/N0ref)
     } 
   //printf("\n");
 
-  for(i=0;i<nNodes-1;i++)
-    {
-      fi=0.;
-      fi1=0.;
-      if(i==*iNode)
-	fi=*delta;
-      if(i+1==*iNode)
-	fi1=*delta;
-      for(iLev=nodeP[i];iLev<=min(87,nodeP[i+1]);iLev++)
-	//	if(iLev<87)
-	{
-	  f=(iLev-nodeP[i]+0.)/(nodeP[i+1]-nodeP[i]+0.01);
-	  if(f>1) f=1;
-	  log10dNPi=(1-f)*(log10dNP[i]+fi)+f*(log10dNP[i+1]+fi1);
-
-// **************** crash site
-//printf("   A fModelFortran: %i %i %i %12.6f  \n",nbins,ngates,nNodes,delta);
-//printf("   B fModelFortran: %i %i %i %i      \n",i,nodeP[i],nodeP[i+1],iLev);
-//printf("   C fModelFortran: %i %12.6f %12.6f \n",iNode,f,log10dNPi);
-	  log10dN[iLev]=(log10dNPi);
-// **************** crash site
-
-	}
-    }
   
   *pia35M=0;
   *pia13M=0;
@@ -191,7 +166,7 @@ float *log10dN   : vector, returns retrieved log10(N0/N0ref)
   for(i=0;i<*ngates;i++)
     imuv[i]=*imu;
   //  for(i=0;i<ngates;i++)
-  //  hh[i]=(nbins-i)*dr*cos(*localZAngle/180.*3.1415);
+  // hh[ i]=(nbins-i)*dr*cos(*localZAngle/180.*3.1415);
   //printf("nbins=%i \n",nbins);
   if(node[4]>nbins) node[4]=nbins;
   //printf("node0=%i node1=%i \n",node[0],node[4]);
@@ -262,7 +237,6 @@ float *log10dN   : vector, returns retrieved log10(N0/N0ref)
 	     dr,node,isurf,imuv,
 	     ngates,nmfreq,hh,itype,kext,salb,asym,
 	     rrate,d0,hfreez, pia13srt,imemb);
-//  SFM  begin  07/29/2014; for M.Grecu  to eliminate NANs
       if(isnan(*pia35M))
 	{
 	  printf("%g \n",*pia35M);
@@ -434,12 +408,8 @@ float *log10dN   : vector, returns retrieved log10(N0/N0ref)
 
     }
      
-//  SFM  deletion  08/13/2014; for M.Grecu, "long orbit" correction
 
-  for(i=0;i<nNodes;i++)
-    {
-      //log10dNP[i]=log10dN[nodeP[i]];
-    }
+
 
 //  SFM  begin  07/29/2014; for M.Grecu  to eliminate NAN data
   int count;
