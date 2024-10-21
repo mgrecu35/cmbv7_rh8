@@ -22,7 +22,7 @@ extern "C" void fhb11_(float *z13,float *z35,float *z13obs,
 
 extern "C" float ran_mod_mp_normal2_(float *nm, float *nstd); 
 
-void f_model_fortran_(float *z13obs, float *z35obs, 
+extern "C" void f_model_fortran_(float *z13obs, float *z35obs, 
 		   int nodes[5], int *isurf, int *imu,
 		   float *log10dNP, int *nodeP, int nNodes, 
 		   float *pia35M, float *pia13M,
