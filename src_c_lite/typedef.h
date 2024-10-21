@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <math.h>
 
-#ifdef GFOR 
+//#ifdef GFOR 
 #define nb 5
-#endif
-#ifdef IFORT 
-#define nb 8
-#endif
+//#endif
+//#ifdef IFORT 
+//#define nb 8
+//#endif
 typedef struct stormStructType
 {
   int     *nodes;     // 5 nodes that define the storm structure 

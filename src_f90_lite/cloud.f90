@@ -1,5 +1,5 @@
 module cldclass
-  integer:: nlayer, nc
+  integer:: nlayer, ncld
   integer:: nRhEofs, nCldwEofs
   real,allocatable :: temp(:), & ! temperature profile used in the radiative transfer module
        rlhm(:), &     ! mean relative humidity profile, currently, not used
@@ -43,15 +43,16 @@ real :: tsfc,dr,tavg
 real :: psfc, freq35
 real :: junk(40)
 real :: pav, qvsat, es,  pwvsat, H(100), qv0(100), qv0r(100)
+integer :: nc
 freq35=35.
 n=40
 drrte=0.5
 psfc=1000.
 nlayer=n
-nc=50
+ncld=50
 nRhEofs=20
 nCldwEofs=20
-
+nc=ncld
 if(allocated(temp)) return
 allocate(temp(0:n),height(0:n),press(0:n),rlhm(n))
 allocate(rlhmrc(n,nc), rlhmcs(n,nc), cc(n,nc))

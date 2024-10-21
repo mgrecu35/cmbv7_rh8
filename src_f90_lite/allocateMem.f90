@@ -341,7 +341,7 @@ subroutine allocateDPRProfRet(this,nmfreq,nmemb,ngates, nNodes)
   allocate(this%simSigmaZeroKa(nmemb)) !SJM 12/3/2014
   allocate(this%z35mMean(ngates))
   allocate(this%z35mSig(ngates))
-  allocate(this%tpwCldMod(nc))
+  allocate(this%tpwCldMod(ncld))
 end subroutine allocateDPRProfRet
 
 subroutine allocateDPRProfData(this, ngates)
